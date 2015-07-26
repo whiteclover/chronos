@@ -103,7 +103,7 @@ add task into chronos:
 :once: set True will run only once time.
 :start: when chronos start and schedule a new task, if set to True will add to Tornado IOLoop and schedule to run at time.
 :process: if process is True, then the job will run in on a procees, otherwise defaultly running in thread.
-:max_executor: the max threads(or processes) to run a task, this 
+:max_executor: the max threads(or processes) to run a task.
 
 
 remove_task
