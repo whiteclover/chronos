@@ -36,8 +36,7 @@ except ImportError:
 LOG = logging.getLogger("chronos")
 
 
-
-__version__ = '0.1.2'
+__version__ = '0.1.3'
 
 
 def every_second(seconds):
@@ -291,7 +290,7 @@ class every(object):
             # If we are running for the first time, make sure we run
             # at the specified time *today* (or *this hour*) as well
             if not self.fisrt_ruuned:
-                
+
                 if (self.unit == 'days' and self.at_time > now_.time() and
                         self.interval == 1):
                     next_run = next_run - timedelta(days=1)
@@ -319,10 +318,10 @@ class Task:
         self.action = action
         self.timer = timer
         self.once = once
-        
+
         self.io_loop = io_loop
         self.max_executor = max_executor
-        
+
         self.process = process
         self.executor_creator = ProcessExecutor if process else ThreadExecutor
         self.executors = []
@@ -372,7 +371,6 @@ class Task:
                 self._schedule_next()
             else:
                 self.stop(True)
-
 
     def get_executor(self):
         for executor in self.executors:
@@ -424,12 +422,11 @@ class Task:
         LOG.info('Clear and stop task: "%s"' % (self.name))
         self.clear()
 
-
     def _graceful_shutdown_process(self, executor):
         if executor.is_alive():
             executor.terminate()
             os.kill(executor.pid, signal.SIGTERM)
-            # Force kill 
+            # Force kill
             if executor.is_alive():
                 terminate_process(executor.pid)
 
@@ -467,11 +464,10 @@ class ProcessExecutor(multiprocessing.Process):
         self.event.clear()
         self.event.wait()
 
-
     def setup_signal_handle(self):
         signal.signal(signal.SIGTERM, self._handle_signal)
 
-    def _handle_signal(self):
+    def _handle_signal(self, signum, frame):
         self.ready = False
         self.resume()
 
@@ -594,7 +590,7 @@ class Chronos:
 
     def stop(self, stop_ioloop=False, clear=True):
         if not self.running:
-            return 
+            return
         for _, task in self._tasks.items():
             task.stop(clear)
 

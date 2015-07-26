@@ -28,7 +28,7 @@ import chronos
 setup(name='chronospy',
       version=chronos.__version__,
       description='Mutil-thread/mutil-process task scheduler drive by Tornado IOLoop for human.',
-      long_description=open('README.rst').read(),
+      long_description=open('README.rst').read() + "\n\n" + open('CHANGES').read(),
       author="Thomas Huang",
       url='https://github.com/thomashuang/chronos',
       author_email='lyanghwy@gmail.com',
