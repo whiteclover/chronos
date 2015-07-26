@@ -82,14 +82,19 @@ Hello World
 API
 ============
 
-setup(io_loop=None)
+setup
+
 -----------------------
+
+setup(io_loop=None)
 
 bind a io_loop  or use default ioloop.
 
 
-schedule(name, timer, func, once=False, start=False, process=False, max_executor=5)
+schedule
 --------------------------------------------------------------------------------------------
+
+schedule(name, timer, func, once=False, start=False, process=False, max_executor=5)
 
 add task into chronos:
 
@@ -103,32 +108,39 @@ add task into chronos:
 :max_executor: the max threads(or processes) to run a task, this 
 
 
-remove_task(task_name)
+remove_task
 ------------------------------
+
+remove_task(task_name)
 
 stop and remove the task from chronos
 
 
 
-start_task(task_name)
+start_task
 --------------------------
+
+start_task(task_name)
 
 start the task in chronos
 
 
-stop_task(task_name)
+stop_task
 ----------------------------
+stop_task(task_name)
 
 stop the task in chronos
 
-start(start_ioloop=False)
+start
 ----------------------------
+start(start_ioloop=False)
 
 add tasks in ioloop, if you use chronos in a tornado web server, you can set start_ioloop to "False", then start your custom ioloop later.
 
 
-stop(stop_ioloop=False, clear=True)
+stop
 ----------------------------------------------
+stop(stop_ioloop=False, clear=True)
 
 stop the task in ioloop
 
