@@ -33,6 +33,10 @@ setup(name='chronospy',
       author_email='lyanghwy@gmail.com',
       py_modules=['chronos'],
       install_requires=['setuptools',  'tornado'],
+      keywords=[
+          'schedule', 'periodic', 'jobs', 'scheduling', 'clockwork',
+          'cron'
+      ],
       license="GPL",
       platforms='any',
       classifiers=(
@@ -42,6 +46,5 @@ setup(name='chronospy',
           "Programming Language :: Python",
           "Programming Language :: Python :: 2.7",
           "Operating System :: OS Independent",
-          "Topic :: Database"
       )
       )

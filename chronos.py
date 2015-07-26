@@ -37,7 +37,7 @@ LOG = logging.getLogger("chronos")
 
 
 
-__version__ = '0.1.0'
+__version__ = '0.1.1'
 
 
 def every_second(seconds):

@@ -37,8 +37,8 @@ class StubDatetime(object):
         setattr(chronos, 'datetime', self.old_datetime)
 
 
-def current(t):
-    return datetime.datetime.now() + t
+def current(next_time):
+    return datetime.datetime.now() + next_time
 
 
 class EveryTest(unittest.TestCase):
