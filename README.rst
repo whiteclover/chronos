@@ -25,7 +25,7 @@ or clone it form github then run the command in shell:
 
 .. code-block:: bash
 
-    cd db # the path to the project
+    cd chronos # the path to the project
     python setup.py install
 
 
@@ -83,9 +83,7 @@ API
 ============
 
 setup
-
 -----------------------
-
 setup(io_loop=None)
 
 bind a io_loop  or use default ioloop.
