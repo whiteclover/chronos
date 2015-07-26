@@ -161,10 +161,10 @@ every_at
 ----------------
 
 
-set every hourly or mintuely run a job:
+set every hourly or mintuely run a job::
 
-	every_at(every_at(hour=1, minute=10, second=0)) # run at 01:10:00 every day
-	every_at(every_at(minute=10, second=0)) # run at run at 10 mintue every hour
+	every_at(hour=1, minute=10, second=0) # run at 01:10:00 every day
+	every_at(minute=10, second=0) # run at run at 10 mintue every hour
 
 
 every
