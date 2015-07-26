@@ -37,7 +37,7 @@ LOG = logging.getLogger("chronos")
 
 
 
-__version__ = '0.1.1'
+__version__ = '0.1.2'
 
 
 def every_second(seconds):
@@ -428,7 +428,7 @@ class Task:
     def _graceful_shutdown_process(self, executor):
         if executor.is_alive():
             executor.terminate()
-            os.kill(pid, signal.SIGTERM)
+            os.kill(executor.pid, signal.SIGTERM)
             # Force kill 
             if executor.is_alive():
                 terminate_process(executor.pid)
