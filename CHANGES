@@ -1,0 +1,11 @@
+chronospy
+=============
+
+Version 0.1.1
+------------------
+
+Chronos is a mutil-thread/mutil-process task scheduler drive by Tornado IOLoop.
+
+Released on June 26 2015
+
+- first version
