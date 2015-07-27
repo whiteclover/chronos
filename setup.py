@@ -42,7 +42,7 @@ setup(name='chronospy',
       platforms='any',
       classifiers=(
           "Development Status :: 3 - Alpha",
-          "License :: OSI Approved :: GNU Affero General Public License v2",
+          "License :: OSI Approved :: GNU Affero General Public License v3",
           "Natural Language :: English",
           "Programming Language :: Python",
           "Programming Language :: Python :: 2.7",

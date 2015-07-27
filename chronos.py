@@ -373,7 +373,7 @@ class Task:
                 self.stop(True)
 
     def get_executor(self):
-        self.executors = [executor for executor in self.executors if executor.is_alive()] # clear dead executor
+        self.executors = [executor for executor in self.executors if executor.is_alive()]  # clear dead executor
         for executor in self.executors:
             if executor.is_idle():
                 return executor
@@ -393,8 +393,6 @@ class Task:
             self.io_loop.remove_timeout(self._timeout)
             self._timeout = None
 
-        
-
     def running_executors(self):
         return [e for e in self.executors if not e.is_idle()]
 
@@ -402,7 +400,6 @@ class Task:
         # Must shut down executors here so the code that calls
         # this method can know when all executors are stopped.
         ShutDown(self, clear, timeout).shutdown()
-  
 
     def try_shutdown_thread(self):
         for executor in self.executors:
@@ -426,7 +423,6 @@ class Task:
 
     def clear(self):
 
-        
         self.action = None
         self.executors[:] = []
 
@@ -439,7 +435,6 @@ class ShutDown(object):
         self._timeout = None
         self.clear = clear
         self._next_timeout = None
-
 
     def shutdown(self):
         current_time = time.time()
@@ -461,8 +456,6 @@ class ShutDown(object):
                 self.task.io_loop = None
             self.task.clear()
             self.task = None
-
-
 
     def _schedule_next(self, current_time):
         self._next_timeout = current_time + 1
