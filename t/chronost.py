@@ -116,7 +116,7 @@ class EveryTests(unittest.TestCase):
 import os
 
 def test_proc(word="hello chronos"):
-    LOG.info("%s :%s" % ,word, os.getpid())        
+    LOG.info("%s :%s" , word, os.getpid())        
 
 class ChronosTest(unittest.TestCase):
 
