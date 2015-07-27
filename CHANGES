@@ -1,6 +1,16 @@
 CHANGES
 =============
 
+Version 0.1.4
+------------------
+
+
+Released on July 27 2015
+
+- Improved shutdown task 
+- Fixed dead executor and clear dead executor
+
+
 Version 0.1.3
 ------------------
 
