@@ -373,6 +373,7 @@ class Task:
                 self.stop(True)
 
     def get_executor(self):
+        self.executors = [executor for executor in self.executors if executor.is_alive()] # clear dead executor
         for executor in self.executors:
             if executor.is_idle():
                 return executor
@@ -386,41 +387,34 @@ class Task:
     def stop(self,  clear=False):
         """Stops the timer."""
         self._running = False
-
-        if clear:
-            self.clear_executor()
+        self.clear_executor(clear)
 
         if self._timeout is not None:
             self.io_loop.remove_timeout(self._timeout)
             self._timeout = None
 
-        if clear:
-            self.io_loop = None
+        
 
     def running_executors(self):
         return [e for e in self.executors if not e.is_idle()]
 
-    def clear_executor(self, timeout=5):
+    def clear_executor(self, clear=False, timeout=5):
         # Must shut down executors here so the code that calls
         # this method can know when all executors are stopped.
-        stop_time = time.time() + timeout
+        ShutDown(self, clear, timeout).shutdown()
+  
 
-        while time.time() <= stop_time:
-            time.sleep(1)
-            for executor in self.executors:
-                if executor.is_idle():
-                    if not self.process:
-                        executor.action = _SHUTDOWNTASK
-                        executor.resume()
+    def try_shutdown_thread(self):
+        for executor in self.executors:
+            if executor.is_idle():
+                if not self.process:
+                    executor.action = _SHUTDOWNTASK
+                    executor.resume()
 
-                    # executor.event.clear()
-
+    def try_shutdown_process(self):
         if self.process:
             for executor in self.executors:
                 self._graceful_shutdown_process(executor)
-
-        LOG.info('Clear and stop task: "%s"' % (self.name))
-        self.clear()
 
     def _graceful_shutdown_process(self, executor):
         if executor.is_alive():
@@ -431,8 +425,48 @@ class Task:
                 terminate_process(executor.pid)
 
     def clear(self):
+
+        
         self.action = None
         self.executors[:] = []
+
+
+class ShutDown(object):
+
+    def __init__(self, task,  clear, timeout):
+        self.task = task
+        self.timeout = timeout
+        self._timeout = None
+        self.clear = clear
+        self._next_timeout = None
+
+
+    def shutdown(self):
+        current_time = time.time()
+        self.try_until = current_time + self.timeout
+        self._schedule_next(current_time)
+
+    def _try_shutdown(self):
+        current_time = time.time()
+        if current_time < self.try_until:
+            self.task.try_shutdown_thread()
+            self._schedule_next(current_time)
+        else:
+            self.task.try_shutdown_process()
+            if self._timeout is not None:
+                self.task.io_loop.remove_timeout(self._timeout)
+                self._timeout = None
+            LOG.info('Clear and stop task: "%s"' % (self.task.name))
+            if self.clear:
+                self.task.io_loop = None
+            self.task.clear()
+            self.task = None
+
+
+
+    def _schedule_next(self, current_time):
+        self._next_timeout = current_time + 1
+        self._timeout = self.task.io_loop.add_timeout(self._next_timeout, self._try_shutdown)
 
 
 def terminate_process(pid):
