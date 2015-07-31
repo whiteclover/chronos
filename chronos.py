@@ -36,7 +36,7 @@ except ImportError:
 LOG = logging.getLogger("chronos")
 
 
-__version__ = '0.1.4'
+__version__ = '0.1.5'
 
 
 def every_second(seconds):
@@ -370,6 +370,7 @@ class Task:
             if not self.once:
                 self._schedule_next()
             else:
+                LOG.info("clear executors")
                 self.stop(True)
 
     def get_executor(self):
@@ -386,6 +387,8 @@ class Task:
 
     def stop(self,  clear=False):
         """Stops the timer."""
+        if not self._running:
+            return 
         self._running = False
         self.clear_executor(clear)
 
@@ -399,6 +402,7 @@ class Task:
     def clear_executor(self, clear=False, timeout=5):
         # Must shut down executors here so the code that calls
         # this method can know when all executors are stopped.
+        LOG.info("clear executors")
         ShutDown(self, clear, timeout).shutdown()
 
     def try_shutdown_thread(self):
@@ -430,6 +434,7 @@ class Task:
 class ShutDown(object):
 
     def __init__(self, task,  clear, timeout):
+        LOG.debug(" shutdown Try stop task: %s", task.name)
         self.task = task
         self.timeout = timeout
         self._timeout = None
@@ -440,6 +445,7 @@ class ShutDown(object):
         current_time = time.time()
         self.try_until = current_time + self.timeout
         self._schedule_next(current_time)
+        LOG.debug("Try stop task: %s", self.task.name)
 
     def _try_shutdown(self):
         current_time = time.time()

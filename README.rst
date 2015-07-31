@@ -36,36 +36,27 @@ Hello World
 
 .. code-block:: python
 
-	import logging
-	import time
 	import tornado
 	import chronos
 	import os
 	import urllib2
 
+
 	def test_process():
-	    LOGGER.info("process pid %s", os.getpid())
+	    print("process pid %s" % (os.getpid()))
 
 
 	def test(word):
-	    LOGGER.info("an other task, say '%s'", word)
+	    print("an other task, say '%s'" % (word))
 
 
 	def say():
 	    response = urllib2.urlopen('https://www.google.com/')
 	    html = response.read()
-	    LOGGER.info(html[:10])
+	    print(html[:10])
 
 
 	def init():
-	    global LOGGER
-	    debug = True
-	    level = logging.DEBUG if debug else logging.INFO
-	    logging.basicConfig(level=level,
-	                        format='%(asctime)s %(levelname)-8s %(message)s',
-	                        datefmt='%Y-%m-%d %H:%M:%S', filemode='a+')
-
-	    LOGGER = logging.getLogger("demo")
 
 	    # bind a ioloop or use default ioloop
 	    chronos.setup()  # chronos.setup(tornado.ioloop.IOLoop())
