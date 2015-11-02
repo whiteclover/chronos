@@ -607,6 +607,9 @@ class Chronos:
                 LOG.warning("Doesn't exists task : %s" % (task_name))
 
     def stop_task(self, task_name):
+    	self.io_loop.add_callback(self._stop_task, task_name)
+
+    def _stop_task(self, task_name):
         with self.lock:
             task = self._tasks[task_name]
             if task:
@@ -622,6 +625,9 @@ class Chronos:
             self.io_loop.start()
 
     def stop(self, stop_ioloop=False, clear=True):
+    	self.io_loop.add_callback(self._stop, stop_ioloop, clear)
+    	
+    def _stop(self, stop_ioloop=False, clear=True):
         if not self.running:
             return
         for _, task in self._tasks.items():
