@@ -25,11 +25,13 @@ if sys.version_info < (2, 7):
 
 import chronos
 
+
+readme = open(os.path.join(os.path.dirname(__file__), 'README.rst')).read()
+
 setup(name='chronospy',
       version=chronos.__version__,
       description='Mutil-thread/mutil-process task scheduler drive by Tornado IOLoop for human.',
-      # TODO: Get rid of this or find a clean solution
-      #long_description=open('README.rst').read() + "\n\n" + open('CHANGES').read(),
+      long_description=readme,
       author="Thomas Huang",
       url='https://github.com/thomashuang/chronos',
       author_email='lyanghwy@gmail.com',
