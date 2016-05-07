@@ -42,7 +42,7 @@ except ImportError:
 LOG = logging.getLogger("chronos")
 
 
-__version__ = '0.1.6'
+__version__ = '0.1.7'
 
 
 def every_second(seconds):
@@ -705,8 +705,10 @@ class Chronos(object):
 
         Keyword Arguments:
             once {bool} - - set True will run only once time(default: {False})
-            start {bool} - - when chronos start and schedule a new task, if set to True will add to Tornado IOLoop and schedule to run at time(default: {False})
-            process {bool} - - if process is True, then the job will run in on a procees, otherwise defaultly running in thread(default: {False})
+            start {bool} - - when chronos start and schedule a new task, 
+            if set to True will add to Tornado IOLoop and schedule to run at time(default: {False})
+            process {bool} - - if process is True, then the job will run in on a procees, 
+            otherwise defaultly running in thread(default: {False})
             max_executor {number} - - the max threads(or processes) to run a task(default: {5})
         """
         with self.lock:
@@ -749,10 +751,11 @@ class Chronos(object):
                 LOG.warning("Doesn't exists task : %s" % (task_name))
 
     def stop_task(self, task_name):
-        """
-add tasks in ioloop, if you use chronos in a tornado web server, you can set start_ioloop to "False", then start your custom ioloop later.
+        """Stop task in ioloop
 
-        [description]
+        If you use chronos in a tornado web server, 
+        you can set start_ioloop to "False", then start your custom ioloop later.
+
 
         Arguments:
             task_name {[type]} -- [description]
@@ -768,7 +771,9 @@ add tasks in ioloop, if you use chronos in a tornado web server, you can set sta
                 LOG.warning("Doesn't exists task : %s" % (task_name))
 
     def start(self, start_ioloop=False):
-        """Add tasks in ioloop, if you use chronos in a tornado web server, you can set start_ioloop to "False", then start your custom ioloop later.
+        """Add tasks in ioloop
+
+        If you use chronos in a tornado web server, you can set start_ioloop to "False", then start your custom ioloop later.
 
         Keyword Arguments:
             start_ioloop {bool} -- will start the ioloop if set to "True" (default: {False})
