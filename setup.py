@@ -36,7 +36,7 @@ setup(name='chronospy',
       url='https://github.com/whiteclover/chronos',
       author_email='lyanghwy@gmail.com',
       py_modules=['chronos'],
-      install_requires=['setuptools',  'tornado'],
+      install_requires=['setuptools', 'tornado'],
       keywords=[
           'schedule', 'periodic', 'jobs', 'scheduling', 'clockwork',
           'cron'
