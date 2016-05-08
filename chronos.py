@@ -753,10 +753,6 @@ class Chronos(object):
     def stop_task(self, task_name):
         """Stop task in ioloop
 
-        If you use chronos in a tornado web server, 
-        you can set start_ioloop to "False", then start your custom ioloop later.
-
-
         Arguments:
             task_name {[type]} -- [description]
         """
@@ -771,7 +767,7 @@ class Chronos(object):
                 LOG.warning("Doesn't exists task : %s" % (task_name))
 
     def start(self, start_ioloop=False):
-        """Add tasks in ioloop
+        """Start the schedule
 
         If you use chronos in a tornado web server, you can set start_ioloop to "False", then start your custom ioloop later.
 
