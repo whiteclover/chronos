@@ -468,7 +468,6 @@ class Task(object):
         """
         if executor.is_alive():
             executor.terminate()
-            os.kill(executor.pid, signal.SIGTERM)
             # Force kill
             if executor.is_alive():
                 terminate_process(executor.pid)

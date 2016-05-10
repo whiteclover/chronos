@@ -6,6 +6,7 @@ import unittest
 from chronos import every_second, every_at, every
 import chronos
 
+import tornado.ioloop
 
 class StubDate1(datetime.datetime):
 
@@ -121,7 +122,7 @@ def test_proc(word="hello chronos"):
 class ChronosTest(unittest.TestCase):
 
     def setUp(self):
-        chronos.setup()
+        chronos.setup(tornado.ioloop.IOLoop())
 
     def tearDown(self):
         chronos.stop(True)
@@ -134,7 +135,7 @@ class ChronosTest(unittest.TestCase):
             with lock:
                 if say.count == 5:
                     chronos.remove_task('say2')
-                    chronos.stop(True)
+                    chronos.stop(True, True)
                 else:
                     say.count += 1
         say.count = 1
@@ -145,7 +146,6 @@ class ChronosTest(unittest.TestCase):
         chronos.schedule('say', every_second(1), lambda: say("test"))
         chronos.schedule('say2', every_second(1), lambda: say2("test2"))
         chronos.start(True)
-
         assert say.count == 5
 
 
@@ -156,7 +156,7 @@ class ChronosTest(unittest.TestCase):
             LOG.info("%s: %d" % (word, say.count))
             with lock:
                 if say.count == 5:
-                    chronos.stop(True)
+                    chronos.stop(True, True)
                 else:
                     say.count += 1
         say.count = 1
@@ -176,7 +176,7 @@ class ChronosTest(unittest.TestCase):
             LOG.info("%s: %d" % (word, say.count))
             with lock:
                 if say.count == 5:
-                    chronos.stop(True)
+                    chronos.stop(True, True)
                 else:
                     say.count += 1
         say.count = 1
